@@ -9,13 +9,14 @@ const Pass = () => {
 
   // true or false (数字, 記号)
   const [numbersCheckbox, setNumbersCheckbox] = useState(false);
-  const [symbolsCheckbox, setsymbolsCheckbox] = useState(false);
+  //   const [symbolsCheckbox, setSymbolsCheckbox] = useState(false);
+  const [upperCheckbox, setUpperCheckbox] = useState(false);
 
   // パスワード生成
   const showPassword = () => {
     const letters = "abcdefghijklmnopqrstuvwxyz";
     const numbers = "1234567890";
-    const symbols = "!#$%&@?";
+    // const symbols = "!#$%&@?";
     let seed = letters + letters.toUpperCase();
     let password = "";
 
@@ -23,12 +24,19 @@ const Pass = () => {
       seed += numbers;
     }
 
-    if (symbolsCheckbox) {
-      seed += symbols;
-    }
+    // if (symbolsCheckbox) {
+    //   seed += symbols;
+    // }
 
     for (let i = 0; i < length; i++) {
       password += seed[Math.floor(Math.random() * seed.length)];
+    }
+
+    if (upperCheckbox) {
+      password = letters.toUpperCase()[Math.floor(Math.random() * 26)];
+      for (let i = 0; i < length - 1; i++) {
+        password += seed[Math.floor(Math.random() * seed.length)];
+      }
     }
 
     return password;
@@ -77,7 +85,7 @@ const Pass = () => {
             }}
           />
         </label>
-        <label>
+        {/* <label>
           記号
           <input
             className="ml-1"
@@ -85,6 +93,19 @@ const Pass = () => {
             checked={symbolsCheckbox}
             onChange={() => {
               setsymbolsCheckbox((prev) => {
+                return !prev;
+              });
+            }}
+          />
+        </label> */}
+        <label>
+          大文字
+          <input
+            className="ml-1"
+            type="checkbox"
+            checked={upperCheckbox}
+            onChange={() => {
+              setUpperCheckbox((prev) => {
                 return !prev;
               });
             }}
