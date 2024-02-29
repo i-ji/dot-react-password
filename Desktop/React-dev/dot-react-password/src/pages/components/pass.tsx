@@ -20,16 +20,24 @@ const Pass = () => {
     let seed = letters + letters.toUpperCase();
     let password = "";
 
-    if (numbersCheckbox) {
-      seed += numbers;
-    }
-
     // if (symbolsCheckbox) {
     //   seed += symbols;
     // }
 
-    for (let i = 0; i < length; i++) {
-      password += seed[Math.floor(Math.random() * seed.length)];
+    if (numbersCheckbox) {
+      seed += numbers;
+    }
+
+    const usedChars = new Set();
+    // console.log(usedChars);
+
+    while (password.length < length) {
+      const char = seed[Math.floor(Math.random() * seed.length)];
+      if (!usedChars.has(char)) {
+        usedChars.add(char);
+        // console.log(usedChars);
+        password += char;
+      }
     }
 
     if (upperCheckbox) {
@@ -42,7 +50,7 @@ const Pass = () => {
     return password;
   };
 
-  const [result, setResult] = useState(showPassword());
+  const [result, setResult] = useState(showPassword);
 
   const generatePass = () => {
     setResult(showPassword());
